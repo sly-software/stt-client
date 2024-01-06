@@ -16,7 +16,9 @@ const Login = () => {
 
     const status = await login(email, password);
 
-    if (status === "OK") {
+    // console.log(status)
+
+    if (status === 200) {
       console.log(status);
       dispatch(toggleOnOff(false));
       navigate("/stocked/chemicals");

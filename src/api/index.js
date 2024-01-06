@@ -49,5 +49,5 @@ export const login = async (email, password) => {
     },
   });
 
-  return res.statusText;
+  return res.status;
 };
