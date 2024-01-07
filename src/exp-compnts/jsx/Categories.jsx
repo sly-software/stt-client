@@ -11,6 +11,10 @@ const Categories = () => {
         Chemicals
       </Link>
 
+      <Link className="category-link" to={`services`}>
+        Services
+      </Link>
+
       <Link className="category-link" to={`offers`}>
         Offers
       </Link>
