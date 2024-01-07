@@ -36,9 +36,9 @@ const Home = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      navigate("stocked/chemicals");
+      navigate("services");
       setRedirect(false);
-    }, 1000);
+    }, 500);
   }, []);
 
   return (
@@ -77,7 +77,7 @@ const Home = () => {
           <Upload />
         </div>
       </header>
-      
+
       <main className="main">
         {/* This is left side navbar */}
         <div className="drawer" id="drawer" autoFocus>
@@ -89,13 +89,15 @@ const Home = () => {
           </div>
         </div>
 
-        {/* This is our workspace */}
+        {/* This is the HOME landing page empty for now */}
         <div className="main-content" id="main">
-          {redirect ? (
-            <p style={{ color: "red" }}>Redirecting to chemicals in 1s ...</p>
-          ) : (
-            <Outlet />
-          )}
+          {
+            redirect ? (
+              <p style={{ color: "red" }}>Redirecting to home in 1s ...</p>
+            ) : (
+              <Outlet />
+            )
+          }
         </div>
       </main>
       <footer className="footer">All rights reserved</footer>

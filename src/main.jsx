@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import store from "./store.js";
 import Login from "./exp-compnts/jsx/Login.jsx";
 import Register from "./exp-compnts/jsx/Register.jsx";
+import Miscellaneous from "./exp-compnts/jsx/Miscellaneous.jsx";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
     element: <Home />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: "services",
+        element: <Miscellaneous />,
+      },
       {
         path: "stocked/chemicals",
         element: <CurrentChemicalsTable />,
