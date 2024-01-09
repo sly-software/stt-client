@@ -38,12 +38,13 @@ const Upload = () => {
      * then close the upload dialog
      */
     (async () => {
-      await uploadFileData();
+      const uploadFeedback = await uploadFileData();
+      console.log(uploadFeedback);
       setTimeout(() => {
         dispatch(updated());
         dispatch(fetchData());
         setOpen(false);
-      }, 500);
+      }, 1000);
     })();
 
     // uploadFileData()

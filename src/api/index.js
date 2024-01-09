@@ -19,12 +19,14 @@ export const uploadFileData = async () => {
 
   formData.append("files", files.files[0]);
   // console.log(Object.fromEntries(formData));
-  await fetch(baseUrl + "/api/newProducts/uploads", {
+  const uploadFeedback = await fetch(baseUrl + "/api/newProducts/uploads", {
     method: "POST",
     body: JSON.stringify(formData),
   })
     .then((res) => res)
     .catch((err) => ("Error occured", err));
+
+    return uploadFeedback.json();
 };
 
 export const logout = async () => {
