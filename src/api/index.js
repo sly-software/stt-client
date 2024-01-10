@@ -1,5 +1,5 @@
-export const baseUrl = "https://stt-server.onrender.com";
-// export const baseUrl = "http://localhost:5000";
+// export const baseUrl = "https://stt-server.onrender.com";
+export const baseUrl = "http://localhost:5000";
 
 export const getData = async () => {
   const response = await fetch(baseUrl + "/api/stocked/products");
