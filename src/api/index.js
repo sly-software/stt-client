@@ -56,9 +56,9 @@ export const login = async (email, password) => {
 
 export const getCurrentStockLogs = async () => {
   try {
-    // const result = await fetch(`${baseUrl}/api/stocked/logs`);
-    // const logs = await result.json();
-    return { name: "Silvester", created_on: "Wed Jan 10 2024 20:43:19 GMT+0300"};
+    const result = await fetch(`${baseUrl}/api/stocked/logs`);
+    const logs = await result.json();
+    return logs;
   } catch (error) {
     console.error(error);
     return {};
