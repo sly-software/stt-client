@@ -7,7 +7,7 @@ export const currentChemicalsSlice = createSlice({
     chemicals: [],
     status: "idle",
     error: "",
-    lastUpdated: [],
+    lastUpdated: {},
   },
   reducers: {},
   extraReducers(builder) {
@@ -22,17 +22,22 @@ export const currentChemicalsSlice = createSlice({
         } else {
           state.chemicals = action.payload;
         }
-        
+
         // console.log(action.payload);
       })
       .addCase(fetchData.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
-      .addCase(fetchCurrentStockLogs.fulfilled, (state, action) => {
-        // console.log(action.payload)
-        state.lastUpdated = [...action.payload]
+      .addCase(fetchCurrentStockLogs.pending, (state) => {
+        state.lastUpdated = {};
       })
+      .addCase(fetchCurrentStockLogs.fulfilled, (state, action) => {
+        state.lastUpdated = { ...action.payload };
+      })
+      .addCase(fetchCurrentStockLogs.rejected, (state) => {
+        state.lastUpdated = {};
+      });
   },
 });
 
@@ -40,4 +45,7 @@ export const currentChemicalsSlice = createSlice({
 export default currentChemicalsSlice.reducer;
 
 export const fetchData = createAsyncThunk("chemicals/fetchData", getData);
-export const fetchCurrentStockLogs = createAsyncThunk("chemicals/fetchCurrentStockLogs", getCurrentStockLogs);
+export const fetchCurrentStockLogs = createAsyncThunk(
+  "chemicals/fetchCurrentStockLogs",
+  getCurrentStockLogs
+);

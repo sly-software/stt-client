@@ -53,3 +53,7 @@ p {
 .search-field.active {
   border: none;
 }
+
+.logs-color {
+  color: greenyellow;
+}
