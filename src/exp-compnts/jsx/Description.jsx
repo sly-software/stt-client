@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from "react";
 import "../css/description.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCurrentStockLogs } from "../../features/CurrentChemicalsSlice";
 
 const Description = ({ searchTerm, setSearchTerm }) => {
-  const { day, month, year } = useSelector(
-    (state) => state.chemicals.lastUpdated
-  );
-
+  const logs = useSelector((state) => state.chemicals.lastUpdated);
+  const dispatch = useDispatch();
+  
+  // console.log(logs[logs.length-1].name, logs[logs.length-1].changed_on);
+  // const most= Object.keys(logs[logs.length - 1]) ;
+  // console.log(most)
+  
   const handleChange = (e) => {
     e.preventDefault();
     setSearchTerm(e.target.value);
     // setSearchTerm(e.target.value.trim());
   };
 
+  useEffect(() => {
+    dispatch(fetchCurrentStockLogs())
+    
+  }, [dispatch]);
 
   return (
     <div className="instructions">
@@ -28,8 +36,14 @@ const Description = ({ searchTerm, setSearchTerm }) => {
         </p>
       </div>
       <div className="logs fore-ground">
-        <p><b>Updated on: </b>{` ${day}-${month}-${year}`}</p>
-        <p><b>Updated by: </b>Inqaba Biotec</p>
+        <p>
+          <b>Updated on: </b>
+          {}
+        </p>
+        <p>
+          <b>Updated by: </b>
+          {}
+        </p>
         <hr />
         <form action="" className="search-form">
           <input

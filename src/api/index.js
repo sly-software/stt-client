@@ -1,10 +1,10 @@
-export const baseUrl = "https://stt-server.onrender.com";
-// export const baseUrl = "http://localhost:5000";
+// export const baseUrl = "https://stt-server.onrender.com";
+export const baseUrl = "http://localhost:5000";
 
 export const getData = async () => {
   const response = await fetch(baseUrl + "/api/stocked/products");
   const result = await response.json();
-  console.log(result.length)
+  console.log(result.length);
   return result;
 };
 
@@ -26,7 +26,7 @@ export const uploadFileData = async () => {
     .then((res) => res)
     .catch((err) => ("Error occured", err));
 
-    return uploadFeedback.json();
+  return uploadFeedback.json();
 };
 
 export const logout = async () => {
@@ -52,4 +52,15 @@ export const login = async (email, password) => {
   });
 
   return res.status;
+};
+
+export const getCurrentStockLogs = async () => {
+  try {
+    const result = await fetch(`${baseUrl}/api/stocked/logs`);
+    const logs = await result.json();
+    return logs;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 };

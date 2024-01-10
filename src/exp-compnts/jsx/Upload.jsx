@@ -10,7 +10,7 @@ import {
 import "../css/upload.css";
 import { uploadFileData } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchData, updated } from "../../features/CurrentChemicalsSlice";
+import { fetchData } from "../../features/CurrentChemicalsSlice";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -41,7 +41,7 @@ const Upload = () => {
       const uploadFeedback = await uploadFileData();
       console.log(uploadFeedback);
       setTimeout(() => {
-        dispatch(updated());
+        // dispatch(updated());
         dispatch(fetchData());
         setOpen(false);
       }, 1000);

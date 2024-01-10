@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getData } from "../api";
+import { getCurrentStockLogs, getData } from "../api";
 
 export const currentChemicalsSlice = createSlice({
   name: "chemicals",
@@ -7,18 +7,9 @@ export const currentChemicalsSlice = createSlice({
     chemicals: [],
     status: "idle",
     error: "",
-    lastUpdated: { day: "01", month: "01", year: "1995" },
+    lastUpdated: [],
   },
-  reducers: {
-    updated: (state) => {
-      const dateObj = new Date();
-      state.lastUpdated = {
-        day: dateObj.getDate(),
-        month: dateObj.getMonth() + 1,
-        year: dateObj.getFullYear(),
-      };
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(fetchData.pending, (state) => {
@@ -37,11 +28,16 @@ export const currentChemicalsSlice = createSlice({
       .addCase(fetchData.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
-      });
+      })
+      .addCase(fetchCurrentStockLogs.fulfilled, (state, action) => {
+        // console.log(action.payload)
+        state.lastUpdated = [...action.payload]
+      })
   },
 });
 
-export const { updated } = currentChemicalsSlice.actions;
+// export const { updated } = currentChemicalsSlice.actions;
 export default currentChemicalsSlice.reducer;
 
 export const fetchData = createAsyncThunk("chemicals/fetchData", getData);
+export const fetchCurrentStockLogs = createAsyncThunk("chemicals/fetchCurrentStockLogs", getCurrentStockLogs);

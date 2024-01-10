@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../css/CurrentChemicalsTable.css";
 import Description from "./Description";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchData } from "../../features/CurrentChemicalsSlice";
+import { fetchCurrentStockLogs, fetchData } from "../../features/CurrentChemicalsSlice";
 import BacktoTop from "./BacktoTop";
 
 const CurrentChemicalsTable = () => {
@@ -10,11 +10,13 @@ const CurrentChemicalsTable = () => {
   const dispatch = useDispatch();
   const chemicalData = useSelector((state) => state.chemicals.chemicals);
   const status = useSelector((state) => state.chemicals.status);
+  // const logs= useSelector(state => state.chemicals.updatedOn)
 
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchData());
-      console.log(chemicalData);
+      // dispatch(fetchCurrentStockLogs())
+      // console.log(chemicalData);
     }
   }, [dispatch, status]);
 
