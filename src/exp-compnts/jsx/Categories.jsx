@@ -15,12 +15,16 @@ const Categories = () => {
         Services
       </Link>
 
+      <Link className="category-link" to={`stockTake`}>
+        FifoTool
+      </Link>
+
       <Link className="category-link" to={`offers`}>
         Offers
       </Link>
 
-      <Link className="category-link" to={`stockTake`}>
-        FIFO
+      <Link className="category-link" to={`delivery-notes`}>
+        DNs
       </Link>
     </>
   );

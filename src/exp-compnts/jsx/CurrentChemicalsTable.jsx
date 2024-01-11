@@ -2,26 +2,27 @@ import React, { useEffect, useState } from "react";
 import "../css/CurrentChemicalsTable.css";
 import Description from "./Description";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCurrentStockLogs, fetchData } from "../../features/CurrentChemicalsSlice";
+import { fetchData } from "../../features/CurrentChemicalsSlice";
 import BacktoTop from "./BacktoTop";
+import SimpleBackdrop from "./SimpleBackdrop";
 
 const CurrentChemicalsTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
   const chemicalData = useSelector((state) => state.chemicals.chemicals);
   const status = useSelector((state) => state.chemicals.status);
-  // const logs= useSelector(state => state.chemicals.updatedOn)
+
 
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchData());
-      // dispatch(fetchCurrentStockLogs())
-      // console.log(chemicalData);
     }
+    
   }, [dispatch, status]);
 
   return (
     <div className="table">
+      { status === "loading" ? <SimpleBackdrop /> : <></> }
       <Description searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <table>
         <thead>
@@ -64,7 +65,6 @@ const CurrentChemicalsTable = () => {
         </tbody>
       </table>
       <BacktoTop />
-      {/* <div style={{ margin: "7rem", width: "0.5rem", height: "0.5rem" }}></div> */}
     </div>
   );
 };

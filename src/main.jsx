@@ -10,6 +10,7 @@ import store from "./store.js";
 import Login from "./exp-compnts/jsx/Login.jsx";
 import Register from "./exp-compnts/jsx/Register.jsx";
 import Miscellaneous from "./exp-compnts/jsx/Miscellaneous.jsx";
+import DeliveryNotes from "./exp-compnts/jsx/DeliveryNotes.jsx";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
         path: "register",
         element: <Register />,
       },
+      {
+        path: "delivery-notes",
+        element: <DeliveryNotes />
+      }
     ],
   },
 ]);
