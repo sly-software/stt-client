@@ -11,6 +11,7 @@ import Login from "./exp-compnts/jsx/Login.jsx";
 import Register from "./exp-compnts/jsx/Register.jsx";
 import Miscellaneous from "./exp-compnts/jsx/Miscellaneous.jsx";
 import DeliveryNotes from "./exp-compnts/jsx/DeliveryNotes.jsx";
+import Offer from "./exp-compnts/jsx/Offer.jsx";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "delivery-notes",
         element: <DeliveryNotes />
+      },
+      {
+        path: "offers",
+        element: <Offer />
       }
     ],
   },

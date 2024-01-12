@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
 import { toggleOnOff } from "../../features/UploadSlice";
 import { logout } from "../../api";
+import BacktoTop from "./BacktoTop";
 
 const Home = () => {
   const [redirect, setRedirect] = useState(true);
@@ -36,7 +37,7 @@ const Home = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      navigate("services");
+      navigate("stocked/chemicals");
       setRedirect(false);
     }, 500);
   }, []);
@@ -98,6 +99,7 @@ const Home = () => {
               <Outlet />
             )
           }
+          <BacktoTop />
         </div>
       </main>
       <footer className="footer">All rights reserved</footer>

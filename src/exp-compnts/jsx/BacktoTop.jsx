@@ -10,8 +10,9 @@ const BacktoTop = () => {
     // Get the button
     const backToTopBtn = document.getElementById("top");
     if (
-      document.body.scrollTop > 20 ||
-      document.documentElement.scrollTop > 20
+      (document.body.scrollTop > 20 ||
+        document.documentElement.scrollTop > 20) &&
+      window.location.pathname === "/stocked/chemicals"
     ) {
       backToTopBtn.style.display = "block";
     } else {

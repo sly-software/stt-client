@@ -3,7 +3,6 @@ import "../css/CurrentChemicalsTable.css";
 import Description from "./Description";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../../features/CurrentChemicalsSlice";
-import BacktoTop from "./BacktoTop";
 import SimpleBackdrop from "./SimpleBackdrop";
 
 const CurrentChemicalsTable = () => {
@@ -64,7 +63,6 @@ const CurrentChemicalsTable = () => {
           )}
         </tbody>
       </table>
-      <BacktoTop />
     </div>
   );
 };

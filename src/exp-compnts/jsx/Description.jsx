@@ -10,8 +10,6 @@ const Description = ({ searchTerm, setSearchTerm }) => {
 
   const handleChange = (e) => {
     e.preventDefault();
-    setSearchTerm(e.target.value);
-    // setSearchTerm(e.target.value.trim());
   };
 
   useEffect(() => {
