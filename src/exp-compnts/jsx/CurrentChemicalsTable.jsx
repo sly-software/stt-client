@@ -19,10 +19,13 @@ const CurrentChemicalsTable = () => {
     
   }, [dispatch, status]);
 
+
   return (
     <div className="table">
       { status === "loading" ? <SimpleBackdrop /> : <></> }
+
       <Description searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
       <table>
         <thead>
           <tr>

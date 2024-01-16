@@ -1,36 +1,42 @@
-import React, { useState } from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography,
+  Zoom,
+  Link,
+} from "@mui/material";
 import "../css/offers.css";
-import Link from "@mui/material/Link";
 import { LuPlus } from "react-icons/lu";
-import { Zoom } from "@mui/material";
 import AddOffer from "./AddOffer";
-
-const offerDataModel = [
-  {
-    product_description: "Mastercycler® X50 - PCR Thermocycler",
-    product_code: "6303000010",
-    discount: "20",
-    validity: "Offer valid until 30 Dec 2024",
-    img_link:
-      "https://www.eppendorf.com/product-media/img/global/233332/Eppendorf_PCR_Mastercycler-X50s_product.jpg?imwidth=540",
-    product_link:
-      "https://www.eppendorf.com/za-en/eShop-Products/PCR/Thermocyclers/Mastercycler-X50-p-PF-217186",
-  },
-
-];
+import { useDispatch, useSelector } from "react-redux";
+import { fetchOffers } from "../../features/Offers";
 
 export default function Offer() {
   const [open, setOpen] = useState(false);
+  const [pCodeToEdit, setPCodeToEdit] = useState("");
+  const [edit, setEdit] = useState(false);
+  const dispatch = useDispatch();
+  const currentOffers = useSelector((state) => state.offers.currentOffers);
+  const productCode = useRef();
+
+  useEffect(() => {
+    dispatch(fetchOffers());
+    // console.log(currentOffers[0].img_link);
+  }, [dispatch]);
+
+  const handleEdit = () => {
+    setPCodeToEdit(productCode.current.innerText);
+    setOpen(!open);
+    setEdit(true);
+  };
 
   return (
     <div className="offers-container">
-      {offerDataModel.map((data, index) => (
+      {currentOffers.map((data, index) => (
         <Zoom
           in={true}
           style={{ transitionDelay: `${index * 400 + 800}ms` }}
@@ -39,9 +45,9 @@ export default function Offer() {
           <Card sx={{ maxWidth: 345 }}>
             <CardMedia
               component="img"
-              alt="product under offer"
+              alt="product img"
               height="auto"
-              image={data.img_link}
+              image={String(data.img_link)}
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
@@ -49,19 +55,30 @@ export default function Offer() {
               </Typography>
 
               <Typography gutterBottom variant="p" component="div">
-                Cat. no: {data.product_code}.
+                Cat. no: <span ref={productCode}>{data.product_code}</span>.
               </Typography>
+
               <Typography
                 variant="body2"
                 color="text.secondary"
                 sx={{ marginTop: "1rem" }}
               >
-                Now available with <b>{data.discount}% Discount</b>.{" "}
-                {data.validity}
+                Now available with <b>{data.discount}% Discount</b>.
+                <span>
+                  {data.validity === ""
+                    ? ` ${data.discount_condition} `
+                    : ` ${data.discount_condition} ${new Date(
+                        data.validity
+                      ).getDate()}/${
+                        new Date(data.validity).getMonth() + 1
+                      }/${new Date(data.validity).getFullYear()} `}
+                </span>
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small">Edit</Button>
+              <Button size="small" onClick={handleEdit}>
+                Edit
+              </Button>
               <Button size="small">
                 <Link href={data.product_link} underline="hover" target="blank">
                   Learn more
@@ -72,10 +89,21 @@ export default function Offer() {
         </Zoom>
       ))}
 
-      <AddOffer open={open} setOpen={setOpen}/>
+      <AddOffer
+        open={open}
+        setOpen={setOpen}
+        editState={edit}
+        setEdit={setEdit}
+        pCodeToEdit={pCodeToEdit}
+      />
 
       <div className="offer-add-new">
-        <button onClick={()=>setOpen(!open)}>
+        <button
+          onClick={() => {
+            setOpen(!open);
+            setEdit(false);
+          }}
+        >
           <LuPlus /> NEW
         </button>
       </div>

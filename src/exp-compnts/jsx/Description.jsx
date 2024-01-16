@@ -8,9 +8,6 @@ const Description = ({ searchTerm, setSearchTerm }) => {
   const logs = useSelector((state) => state.chemicals.lastUpdated);
   const date = new Date(logs.changed_on);
 
-  const handleChange = (e) => {
-    e.preventDefault();
-  };
 
   useEffect(() => {
     dispatch(fetchCurrentStockLogs());
@@ -49,7 +46,7 @@ const Description = ({ searchTerm, setSearchTerm }) => {
             className="search-field"
             placeholder="Enter keyword -- ethanol --"
             value={searchTerm}
-            onChange={handleChange}
+            onChange={(e)=>setSearchTerm(e.target.value)}
           />
         </form>
       </div>

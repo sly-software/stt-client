@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
+import React, { useEffect, useState } from "react";
 import {
+  Box,
+  Drawer,
   Button,
   FormControl,
   Input,
@@ -10,24 +10,94 @@ import {
   Select,
 } from "@mui/material";
 import "../css/AddOffer.css";
+import { useDispatch } from "react-redux";
+import {
+  addNewOffer,
+  getOffers,
+  fetchOffers,
+  addNewOfferToDb,
+} from "../../features/Offers";
 
-const offerDataModel = {
-  product_description: "Mastercycler® X50 - PCR Thermocycler",
-  product_code: "6303000010",
-  discount: "20",
-  validity: "Offer valid until 30 Dec 2024",
-  img_link:
-    "https://www.eppendorf.com/product-media/img/global/233332/Eppendorf_PCR_Mastercycler-X50s_product.jpg?imwidth=540",
-  product_link:
-    "https://www.eppendorf.com/za-en/eShop-Products/PCR/Thermocyclers/Mastercycler-X50-p-PF-217186",
-};
-
-export default function AddOffer({ open, setOpen }) {
-  const [offerCondition, setOfferCondition] = useState("");
+export default function AddOffer({
+  pCodeToEdit,
+  open,
+  setOpen,
+  editState,
+  setEdit,
+}) {
+  const [product_description, setProductDescription] = useState("");
+  const [product_code, setProductCode] = useState("");
+  const [discount, setDiscount] = useState("");
+  const [discount_condition, setDiscountCondition] = useState("");
+  const [validity, setValidity] = useState("");
+  const [image_link, setImageAddres] = useState("");
+  const [product_link, setProductLink] = useState("");
+  const dispatch = useDispatch();
 
   const handleClick = () => {
+    if (
+      product_code &&
+      product_description &&
+      discount &&
+      discount_condition &&
+      image_link &&
+      product_link
+    ) {
+      // dispatch(
+      //   addNewOffer({
+      //     product_description,
+      //     product_code,
+      //     discount,
+      //     discount_condition,
+      //     validity,
+      //     image_link,
+      //     product_link,
+      //   })
+      // );
+      dispatch(
+        addNewOfferToDb({
+          product_description,
+          product_code,
+          discount,
+          discount_condition,
+          validity,
+          image_link,
+          product_link,
+        })
+      );
+      dispatch(fetchOffers());
+    }
     setOpen(!open);
-  }
+  };
+
+  const handleEdit = () => {
+    if (
+      product_code &&
+      product_description &&
+      discount &&
+      discount_condition &&
+      image_link &&
+      product_link
+    ) {
+      dispatch(
+        updateExistingOffer({
+          product_description,
+          product_code,
+          discount,
+          discount_condition,
+          validity,
+          image_link,
+          product_link,
+        })
+      );
+    }
+
+    dispatch(getOffers());
+
+    setOpen(!open);
+    setEdit(!editState);
+  };
+
   return (
     <div style={{ position: "absolute" }}>
       <Drawer anchor={`right`} open={open} onClose={() => setOpen(!open)}>
@@ -37,23 +107,24 @@ export default function AddOffer({ open, setOpen }) {
         <Box
           sx={{
             "& .MuiTextField-root": { m: 1, width: "25ch" },
-            minWidth: 500,
+            minWidth: "30rem",
             height: "100%",
             top: "4rem",
             padding: "1.5rem",
           }}
           component="form"
-          noValidate
         >
           <div className="input-fields-container">
             <FormControl variant="standard" sx={{ m: 1, minWidth: "100%" }}>
-              <InputLabel htmlFor="description" required>
-                Description
+              <InputLabel htmlFor="product_description" required>
+                product_Description
               </InputLabel>
               <Input
-                id="description"
-                aria-describedby="description-input-field"
+                id="product_description"
+                aria-describedby="product_description-input-field"
                 type="text"
+                value={product_description}
+                onChange={(e) => setProductDescription(e.target.value)}
               />
             </FormControl>
 
@@ -65,6 +136,8 @@ export default function AddOffer({ open, setOpen }) {
                 id="item-code"
                 aria-describedby="item-code-input-field"
                 type="text"
+                value={product_code}
+                onChange={(e) => setProductCode(e.target.value)}
               />
             </FormControl>
 
@@ -76,6 +149,8 @@ export default function AddOffer({ open, setOpen }) {
                 id="discount"
                 aria-describedby="discount-input-field"
                 type="number"
+                value={discount}
+                onChange={(e) => setDiscount(e.target.value)}
               />
             </FormControl>
 
@@ -87,27 +162,27 @@ export default function AddOffer({ open, setOpen }) {
                 labelId="silvester"
                 id="silvester"
                 label="condition"
-                value={offerCondition}
-                onChange={(e) => setOfferCondition(e.target.value)}
+                value={discount_condition}
+                onChange={(e) => setDiscountCondition(e.target.value)}
               >
-                <MenuItem value={" Offer valid until "}>
+                <MenuItem value={"Offer valid until"}>
                   Offer valid untill
                 </MenuItem>
-                <MenuItem value={" While stock last "}>
-                  While stock last
-                </MenuItem>
+                <MenuItem value={"While stock last"}>While stock last</MenuItem>
               </Select>
             </FormControl>
 
             <FormControl variant="standard" sx={{ m: 1, minWidth: "100%" }}>
               <Input
-                id="date"
-                aria-describedby="date-input-field"
+                id="validity"
+                aria-describedby="validity-input-field"
                 type="date"
+                value={validity}
+                onChange={(e) => setValidity(e.target.value)}
+                disabled={discount_condition === "While stock last"}
               />
             </FormControl>
 
-            
             <FormControl variant="standard" sx={{ m: 1, minWidth: "100%" }}>
               <InputLabel htmlFor="image-address" required>
                 Image Address
@@ -116,6 +191,8 @@ export default function AddOffer({ open, setOpen }) {
                 id="image-address"
                 aria-describedby="image-address-input-field"
                 type="text"
+                value={image_link}
+                onChange={(e) => setImageAddres(e.target.value)}
               />
             </FormControl>
 
@@ -127,13 +204,30 @@ export default function AddOffer({ open, setOpen }) {
                 id="product-link"
                 aria-describedby="product-link-input-field"
                 type="text"
+                value={product_link}
+                onChange={(e) => setProductLink(e.target.value)}
               />
             </FormControl>
 
-            <Button variant="standard" sx={{ margin: "1rem" }} onClick={handleClick}>
-              SUBMIT
-            </Button>
-
+            {editState ? (
+              <Button
+                variant="outlined"
+                sx={{ margin: "1rem", fontWeight: "bold" }}
+                color="secondary"
+                onClick={handleEdit}
+              >
+                Save Changes
+              </Button>
+            ) : (
+              <Button
+                variant="outlined"
+                sx={{ margin: "1rem", fontWeight: "bold" }}
+                onClick={handleClick}
+                color="secondary"
+              >
+                SUBMIT
+              </Button>
+            )}
           </div>
         </Box>
         <div className="head-cover-footer"></div>
