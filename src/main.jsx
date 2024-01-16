@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter, createHashRouter } from "react-router-dom";
 import Home from "./exp-compnts/jsx/Home.jsx";
 import ErrorPage from "./exp-compnts/jsx/ErrorPage.jsx";
 import CurrentChemicalsTable from "./exp-compnts/jsx/CurrentChemicalsTable.jsx";
@@ -13,7 +13,7 @@ import Miscellaneous from "./exp-compnts/jsx/Miscellaneous.jsx";
 import DeliveryNotes from "./exp-compnts/jsx/DeliveryNotes.jsx";
 import Offer from "./exp-compnts/jsx/Offer.jsx";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <Home />,
