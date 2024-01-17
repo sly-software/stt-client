@@ -43,17 +43,7 @@ export default function AddOffer({
       image_link &&
       product_link
     ) {
-      // dispatch(
-      //   addNewOffer({
-      //     product_description,
-      //     product_code,
-      //     discount,
-      //     discount_condition,
-      //     validity,
-      //     image_link,
-      //     product_link,
-      //   })
-      // );
+
       dispatch(
         addNewOfferToDb({
           product_description,
@@ -65,8 +55,11 @@ export default function AddOffer({
           product_link,
         })
       );
-      dispatch(fetchOffers());
+
+      
     }
+    
+    dispatch(fetchOffers());
     setOpen(!open);
   };
 

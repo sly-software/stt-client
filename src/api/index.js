@@ -1,5 +1,5 @@
-export const baseUrl = "https://stt-server.onrender.com";
-// export const baseUrl = "http://localhost:5000";
+// export const baseUrl = "https://stt-server.onrender.com";
+export const baseUrl = "http://localhost:5000";
 
 export const getData = async () => {
   const response = await fetch(baseUrl + "/api/stocked/products");
@@ -79,14 +79,16 @@ export const getCurrentOffers = async () => {
 
 export const addNewOfferToCurrent = async (newOffer) => {
   try {
+    
     const response = await fetch(`${baseUrl}/api/current/addOffer`, {
       method: "POST",
       headers: {
-        "Contenty-Type": "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(newOffer),
     });
     const responseJson = await response.json();
+    console.log(responseJson)
     return responseJson;
   } catch (error) {
     console.error(error.message);

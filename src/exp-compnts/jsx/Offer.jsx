@@ -25,7 +25,6 @@ export default function Offer() {
 
   useEffect(() => {
     dispatch(fetchOffers());
-    // console.log(currentOffers[0].img_link);
   }, [dispatch]);
 
   const handleEdit = () => {
