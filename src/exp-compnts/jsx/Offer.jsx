@@ -47,7 +47,7 @@ export default function Offer() {
               component="img"
               alt="product img"
               height="auto"
-              image={String(data.img_link)}
+              image={data.image_link}
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
