@@ -1,8 +1,7 @@
-export const baseUrl = "https://stt-server.onrender.com";
-// export const baseUrl = "http://localhost:5000";
+export const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:5000": "https://stt-server.onrender.com";
 
 export const getData = async () => {
-  const response = await fetch(baseUrl + "/api/stocked/products");
+  const response = await fetch(`${baseUrl}/api/stocked/products`, { credentials: 'include' });
   const result = await response.json();
   console.log(result.length);
   return result;
@@ -22,6 +21,7 @@ export const uploadFileData = async () => {
   const uploadFeedback = await fetch(baseUrl + "/api/newProducts/uploads", {
     method: "POST",
     body: JSON.stringify(formData),
+    credentials: "include",
   })
     .then((res) => res)
     .catch((err) => ("Error occured", err));
@@ -35,6 +35,7 @@ export const logout = async () => {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
   // console.log(response)
   return response.status;
@@ -45,18 +46,22 @@ export const login = async (email, password) => {
 
   const res = await fetch(baseUrl + "/api/login", {
     method: "POST",
+    credentials: "include",
     body: data,
     headers: {
       "Content-Type": "application/json",
     },
   });
-
-  return res.status;
+  const user = await res.json();
+  // console.log(user);
+  return user;
 };
 
 export const getCurrentStockLogs = async () => {
   try {
-    const result = await fetch(`${baseUrl}/api/stocked/logs`);
+    const result = await fetch(`${baseUrl}/api/stocked/logs`, {
+      credentials: "include",
+    });
     const logs = await result.json();
     return logs;
   } catch (error) {
@@ -65,10 +70,21 @@ export const getCurrentStockLogs = async () => {
   }
 };
 
+/**************************************************************** */
+/**************************************************************** */
+/**************************************************************** */
+/*********************    OFFERS ROUTE   ************************ */
+/**************************************************************** */
 export const getCurrentOffers = async () => {
   try {
-    const response = await fetch(`${baseUrl}/api/current/offers`);
+    const response = await fetch(`${baseUrl}/api/current/offers`, {
+      credentials: "include",
+    });
     const offers = await response.json();
+
+    if (offers.message === "Unauthorized") {
+      return [];
+    }
 
     return offers;
   } catch (error) {
@@ -105,6 +121,7 @@ export const addNewOfferToCurrent = async (newOffer) => {
   try {
     const response = await fetch(`${baseUrl}/api/current/addOffer`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -116,5 +133,70 @@ export const addNewOfferToCurrent = async (newOffer) => {
   } catch (error) {
     console.error(error.message);
     return "Error";
+  }
+};
+
+/**************************************************************** */
+/**************************************************************** */
+/**************************************************************** */
+/*********************   DELIVERY NOTES  ************************ */
+/**************************************************************** */
+// export const uploadDN = async (inputFile) => {
+//   const formData = new FormData();
+
+//   for (const file of inputFile.files) {
+//     formData.append("files", file);
+//   }
+
+//   try {
+//     axios.post(`${baseUrl}/api/delivery/notes`,
+//     formData,
+//     {
+//       onUploadProgress: (ProgressEvent) => {
+//         const percentCompleted = Math.round(
+//           (ProgressEvent.loaded * 100) / ProgressEvent.total
+//         );
+//         console.log(percentCompleted);
+//       },
+//     },
+//     );
+//   } catch (error) {
+//     console.log("Something went wrong!", error.message);
+//   }
+// };
+
+export const getUploadedDns = async () => {
+  try {
+    const results = await fetch(`${baseUrl}/api/delivery/dns`, {
+      credentials: "include",
+    });
+
+    const dns = await results.json();
+    // console.log(dns);
+
+    if (dns.message === "Unauthorized") {
+      return [];
+    }
+
+    return dns;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
+/**************************************************************** */
+/**************************************************************** */
+/**************************************************************** */
+/*********************   USER DETAILS    ************************ */
+/**************************************************************** */
+export const getCurrentUser = async () => {
+  try {
+    const data = await fetch(`${baseUrl}/api/user`, { credentials: "include" });
+    const userData = await data.json();
+
+    return userData;
+  } catch (error) {
+    console.error(error.message);
   }
 };

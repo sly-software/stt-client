@@ -4,6 +4,7 @@ import "../css/login.css";
 import { useNavigate } from "react-router-dom";
 import { toggleOnOff } from "../../features/UploadSlice";
 import { login } from "../../api";
+import { fetchUser } from "../../features/Login";
 
 const Login = () => {
   const [password, setPassword] = useState("");
@@ -18,12 +19,10 @@ const Login = () => {
 
     // console.log(status)
 
-    if (status === 200) {
-      console.log(status);
-      dispatch(toggleOnOff(false));
+    if (status.name) {
+      // console.log(status.name);
+      dispatch(fetchUser());
       navigate("/stocked/chemicals");
-
-      
     } else {
       console.log(status);
     }
@@ -60,7 +59,9 @@ const Login = () => {
           required
         />
 
-        <button className="logon-btn">LOGIN</button>
+        <button className="logon-btn" type="submit">
+          LOGIN
+        </button>
       </form>
     </div>
   );

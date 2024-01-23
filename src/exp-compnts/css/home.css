@@ -60,6 +60,7 @@
   height: 100%;
   overflow-x: clip;
   overflow-y: clip;
+  /* border: 1px solid white; */
 
   position: fixed;
   top: 0;
@@ -67,6 +68,7 @@
   background-color: rgba(22, 22, 22, 0.97);
   color: white;
   padding-top: 5rem;
+  padding-left: 0.5rem;
   transition: 0.5s;
   z-index: 99;
 }

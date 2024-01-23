@@ -11,33 +11,40 @@ import { Button } from "@mui/material";
 import { toggleOnOff } from "../../features/UploadSlice";
 import { logout } from "../../api";
 import BacktoTop from "./BacktoTop";
+import CurrentUser from "./CurrentUser";
+import { fetchUser } from "../../features/Login";
 
 const Home = () => {
   const [redirect, setRedirect] = useState(true);
-  const toggleValue = useSelector((state) => state.upload.upload);
+  // const toggleValue = useSelector((state) => state.upload.upload);
+  const toggleValue = false;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+
   const closeNav = () => {
-    document.getElementById("drawer").style.width = "0.5rem";
+    document.getElementById("drawer").style.width = "0";
   };
 
   const openNav = () => {
-    document.getElementById("drawer").style.width = "10rem";
+    document.getElementById("drawer").style.width = "11rem";
   };
 
   const handleLogout = async () => {
     const status = await logout();
+    console.log(status)
     if (status === 200) {
-      dispatch(toggleOnOff(true));
+      dispatch(fetchUser());
+      navigate("/stocked/chemicals")
     } else {
-      console.log(statusText);
+      console.log(status.statusText);
     }
   };
 
   useEffect(() => {
+    dispatch(fetchUser());
     setTimeout(() => {
-      navigate("stocked/chemicals");
+      navigate("delivery-notes");
       setRedirect(false);
     }, 500);
   }, []);
@@ -75,7 +82,8 @@ const Home = () => {
               </Button>
             </Link>
           )}
-          <Upload />
+          <CurrentUser />
+          {/* <Upload /> */}
         </div>
       </header>
 

@@ -1,6 +1,8 @@
 import React from "react";
 import "../css/categories.css";
 import { Link } from "react-router-dom";
+import Tooltip from "@mui/material/Tooltip";
+import LockIcon from '@mui/icons-material/Lock';
 
 const Categories = () => {
   return (
@@ -15,16 +17,28 @@ const Categories = () => {
         Services
       </Link>
 
-      <Link className="category-link" to={`stockTake`} style={{ display: "none"}}>
+      <Link
+        className="category-link"
+        to={`stockTake`}
+        style={{ display: "none" }}
+      >
         FifoTool
       </Link>
 
       <Link className="category-link" to={`offers`}>
-        Specials
+        <Tooltip title={<LockIcon fontSize="small"/>} placement="right">
+          <span>Specials</span>
+        </Tooltip>
       </Link>
 
-      <Link className="category-link" to={`delivery-notes`} style={{ display: "none"}}>
-        DNs
+      <Link
+        className="category-link"
+        to={`delivery-notes`}
+        style={{ display: "block" }}
+      >
+        <Tooltip title={<LockIcon fontSize="small"/>} placement="right">
+          <span>D_Notes</span>
+        </Tooltip>
       </Link>
     </>
   );

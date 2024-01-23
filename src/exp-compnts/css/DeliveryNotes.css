@@ -1,0 +1,41 @@
+.search-dn {
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem;
+
+}
+
+.search-dn>input {
+    width: 70%;
+    height: 2.3rem;
+    padding: 1rem;
+    border-radius: 0.3rem;
+    border: 1px solid rgb(88, 209, 88);
+}
+
+.files_data {
+    display: flex;
+    width: 70%;
+    margin: 1rem auto;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgb(235, 235, 235);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
+
+.files_data-actions {
+    /* border: 1px solid black; */
+    width: 46%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.files_data:hover {
+    width: 71%;
+    transition: all 5s;
+    border: 1px solid rgb(196, 188, 242);
+}

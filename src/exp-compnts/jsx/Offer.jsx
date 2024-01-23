@@ -14,24 +14,33 @@ import { LuPlus } from "react-icons/lu";
 import AddOffer from "./AddOffer";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOffers } from "../../features/Offers";
+import { fetchUser } from "../../features/Login";
+import { useNavigate } from "react-router-dom";
 
 export default function Offer() {
   const [open, setOpen] = useState(false);
   const [pCodeToEdit, setPCodeToEdit] = useState("");
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatch();
-  const currentOffers = useSelector((state) => state.offers.currentOffers);
+  const navigate = useNavigate();
   const productCode = useRef();
-
-  useEffect(() => {
-    dispatch(fetchOffers());
-  }, [dispatch]);
+  const currentOffers = useSelector((state) => state.offers.currentOffers);
+  const userLoggedIn = useSelector((state) => state.user.user).user;
 
   const handleEdit = () => {
     setPCodeToEdit(productCode.current.innerText);
     setOpen(!open);
     setEdit(true);
   };
+
+  useEffect(() => {
+    dispatch(fetchOffers());
+    dispatch(fetchUser());
+
+    if (userLoggedIn === "IBTZ") {
+      return navigate("/login");
+    }
+  }, [dispatch, fetchOffers, fetchUser]);
 
   return (
     <div className="offers-container">
