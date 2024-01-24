@@ -18,6 +18,7 @@ const DeliveryNotes = () => {
   const [open, setOpen] = useState(false);
   const [uploadFinish, setUploadFinish] = useState(true);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ const DeliveryNotes = () => {
           setUploadProgress(percentCompleted);
         },
       });
-      setUploadProgress(0)
+      setUploadProgress(0);
 
       setTimeout(() => {
         setOpen(!open);
@@ -121,13 +122,16 @@ const DeliveryNotes = () => {
                 style={{
                   position: "absolute",
                   top: "1rem",
-                  right: "2rem",
-                  backgroundColor: "inherit",
+                  right: "1rem",
+                  backgroundColor: "black",
+                  color: "white",
+                  borderRadius: "50%",
                 }}
                 onClick={(e) => {
                   e.preventDefault();
                   setOpen(!open);
                   setUploadProgress(0);
+                  setUploadFinish(true)
                 }}
                 type="submit"
               >
@@ -164,49 +168,56 @@ const DeliveryNotes = () => {
         </Button>
         <input
           type="text"
+          style={{ fontSize: "1rem" }}
           // id="search-field"
           placeholder="Enter keyword -- DN name --"
-          // value={searchTerm}
-          // onChange={(e)=>setSearchTerm(e.target.value)}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
       </form>
 
       {/* Files data from DB */}
-      {fileData.map((file, index) => (
-        <Zoom
-          in={true}
-          style={{ transitionDelay: `${index * 50}ms` }}
-          key={index}
-        >
-          <div className="files_data">
-            <div>
-              <b>{file.filename}</b>
+      {fileData
+        .filter((item) => {
+          return searchTerm.toLowerCase() === ""
+            ? true
+            : item.filename.toLowerCase().includes(searchTerm.toLowerCase());
+        })
+        .map((file, index) => (
+          <Zoom
+            in={true}
+            style={{ transitionDelay: `${index * 50}ms` }}
+            key={index}
+          >
+            <div className="files_data">
+              <div>
+                <b>{file.filename}</b>
+              </div>
+
+              <div className="files_data-actions">
+                <span>
+                  {`${new Date(file.uploaddate).getDate()}`}
+                  <sup>th </sup>
+                  Jan{` ${new Date(file.uploaddate).getFullYear()}`}
+                </span>
+
+                <a href={`${file.viewlink}`} target="_blank">
+                  <OpenInNewSharpIcon />
+                </a>
+
+                <a href={`${file.downloadlink}`}>
+                  <FileDownloadIcon />
+                </a>
+
+                <span>
+                  <button type="submit" id={file.fileid} disabled={true}>
+                    <DeleteForeverRoundedIcon />
+                  </button>
+                </span>
+              </div>
             </div>
-
-            <div className="files_data-actions">
-              <span>
-                {`${new Date(file.uploaddate).getDate()}`}
-                <sup>th </sup>
-                Jan{` ${new Date(file.uploaddate).getFullYear()}`}
-              </span>
-
-              <a href={`${file.viewlink}`} target="_blank">
-                <OpenInNewSharpIcon />
-              </a>
-
-              <a href={`${file.downloadlink}`}>
-                <FileDownloadIcon />
-              </a>
-
-              <span>
-                <button type="submit" id={file.fileid}>
-                  <DeleteForeverRoundedIcon />
-                </button>
-              </span>
-            </div>
-          </div>
-        </Zoom>
-      ))}
+          </Zoom>
+        ))}
     </div>
   );
 };
