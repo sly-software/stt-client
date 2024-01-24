@@ -53,7 +53,7 @@ export const login = async (email, password) => {
     },
   });
   const user = await res.json();
-  // console.log(user);
+  console.log(user);
   return user;
 };
 
