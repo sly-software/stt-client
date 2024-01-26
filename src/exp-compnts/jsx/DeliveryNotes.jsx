@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Box, Button, Drawer, TextField, Zoom } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
@@ -70,7 +70,16 @@ const DeliveryNotes = () => {
     }
   };
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   dispatch(fetchDns()); // Get files record from db
+  //   dispatch(fetchUser());
+  //   // const userLoggedIn = useSelector(state => state.user.user).user;
+  //   if (userLoggedIn === "IBTZ") {
+  //     return navigate("/login");
+  //   }
+  // }, [dispatch, fetchDns, fetchUser]);
+
+  useLayoutEffect(() => {
     dispatch(fetchDns()); // Get files record from db
     dispatch(fetchUser());
     // const userLoggedIn = useSelector(state => state.user.user).user;
@@ -131,7 +140,7 @@ const DeliveryNotes = () => {
                   e.preventDefault();
                   setOpen(!open);
                   setUploadProgress(0);
-                  setUploadFinish(true)
+                  setUploadFinish(true);
                 }}
                 type="submit"
               >

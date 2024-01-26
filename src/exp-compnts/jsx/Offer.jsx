@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   Card,
   CardActions,
@@ -33,7 +33,16 @@ export default function Offer() {
     setEdit(true);
   };
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   dispatch(fetchOffers());
+  //   dispatch(fetchUser());
+
+  //   if (userLoggedIn === "IBTZ") {
+  //     return navigate("/login");
+  //   }
+  // }, [dispatch, fetchOffers, fetchUser]);
+
+  useLayoutEffect(() => {
     dispatch(fetchOffers());
     dispatch(fetchUser());
 

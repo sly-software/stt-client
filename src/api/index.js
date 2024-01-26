@@ -1,7 +1,12 @@
-export const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:5000": "https://stt-server.onrender.com";
+export const baseUrl =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:5000"
+    : "https://stt-server.onrender.com";
 
 export const getData = async () => {
-  const response = await fetch(`${baseUrl}/api/stocked/products`, { credentials: 'include' });
+  const response = await fetch(`${baseUrl}/api/stocked/products`, {
+    credentials: "include",
+  });
   const result = await response.json();
   console.log(result.length);
   return result;
