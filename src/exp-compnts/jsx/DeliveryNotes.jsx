@@ -70,17 +70,11 @@ const DeliveryNotes = () => {
     }
   };
 
-  // useEffect(() => {
-  //   dispatch(fetchDns()); // Get files record from db
-  //   dispatch(fetchUser());
-  //   // const userLoggedIn = useSelector(state => state.user.user).user;
-  //   if (userLoggedIn === "IBTZ") {
-  //     return navigate("/login");
-  //   }
-  // }, [dispatch, fetchDns, fetchUser]);
+  useEffect(() => {
+    dispatch(fetchDns()); // Get files record from db
+  }, [dispatch]);
 
   useLayoutEffect(() => {
-    dispatch(fetchDns()); // Get files record from db
     dispatch(fetchUser());
     // const userLoggedIn = useSelector(state => state.user.user).user;
     if (userLoggedIn === "IBTZ") {

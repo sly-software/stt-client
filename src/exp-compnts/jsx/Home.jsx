@@ -45,7 +45,7 @@ const Home = () => {
   useEffect(() => {
     dispatch(fetchUser());
     setTimeout(() => {
-      navigate("delivery-notes");
+      navigate("/stocked/chemicals");
       setRedirect(false);
     }, 500);
 

@@ -34,6 +34,11 @@ export const uploadFileData = async () => {
   return uploadFeedback.json();
 };
 
+/**************************************************************** */
+/**************************************************************** */
+/**************************************************************** */
+/*************  AUTHENTICATION AND AUTHORIZATION   ************** */
+/**************************************************************** */
 export const logout = async () => {
   const response = await fetch(baseUrl + "/api/logout", {
     method: "POST",
@@ -58,10 +63,15 @@ export const login = async (email, password) => {
     },
   });
   const user = await res.json();
-  console.log(user);
+  console.log(res);
   return user;
 };
 
+/**************************************************************** */
+/**************************************************************** */
+/**************************************************************** */
+/*********************  CHEMICAL AND LOGS   ********************* */
+/**************************************************************** */
 export const getCurrentStockLogs = async () => {
   try {
     const result = await fetch(`${baseUrl}/api/stocked/logs`, {
