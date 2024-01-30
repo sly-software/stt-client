@@ -13,6 +13,7 @@ import axios from "axios";
 import { baseUrl } from "../../api";
 import { fetchUser } from "../../features/Login";
 import { useNavigate } from "react-router-dom";
+import { dateFormater } from "../../utils/utils";
 
 const DeliveryNotes = () => {
   const [open, setOpen] = useState(false);
@@ -88,7 +89,6 @@ const DeliveryNotes = () => {
       <div style={{ position: "absolute" }}>
         <Drawer anchor={`bottom`} open={open}>
           <div className="deliveryNoteHeader">
-            <p></p>
           </div>
           <Box
             sx={{
@@ -107,7 +107,7 @@ const DeliveryNotes = () => {
                 justifyItems: "center",
               }}
             >
-              <TextField type="file" id="fileId" required={true} />
+              <TextField type="file" id="fileId" required={true} accept="*.pdf" />
 
               <Button
                 variant="contained"
@@ -194,14 +194,16 @@ const DeliveryNotes = () => {
           >
             <div className="files_data">
               <div>
+                {/* {console.log(dateFormater(file.uploaddate))} */}
                 <b>{file.filename}</b>
               </div>
 
               <div className="files_data-actions">
                 <span>
-                  {`${new Date(file.uploaddate).getDate()}`}
-                  <sup>th </sup>
-                  Jan{` ${new Date(file.uploaddate).getFullYear()}`}
+                  {`${dateFormater(file.uploaddate).day}`}
+                  <sup>{`${dateFormater(file.uploaddate).superString}`}</sup>
+                  {` ${dateFormater(file.uploaddate).monthInWord}`}
+                  {` ${dateFormater(file.uploaddate).year}`}
                 </span>
 
                 <a href={`${file.viewlink}`} target="_blank">
