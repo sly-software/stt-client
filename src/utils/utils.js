@@ -121,4 +121,4 @@ export const dateFormater = (date) => {
   return { day, monthInWord, year, superString };
 };
 
-// console.log(dateFormater("2023-12-11T21:00:00.000Z"));
+export const reverseSort = (list) => list.reverse();

@@ -13,13 +13,16 @@ import axios from "axios";
 import { baseUrl } from "../../api";
 import { fetchUser } from "../../features/Login";
 import { useNavigate } from "react-router-dom";
-import { dateFormater } from "../../utils/utils";
+import { dateFormater, reverseSort } from "../../utils/utils";
+import SimpleSnackBar from "./commons/SimpleSnackBar";
 
 const DeliveryNotes = () => {
   const [open, setOpen] = useState(false);
   const [uploadFinish, setUploadFinish] = useState(true);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [fdbkOpen, setfdbOpen] = useState(false);
+  const [fdbMessage, setfdbMessage] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,29 +37,32 @@ const DeliveryNotes = () => {
     }
 
     try {
-      const instance = axios.create({
-        withCredentials: true,
-        baseURL: baseUrl,
-      });
-
-      instance.post(`/api/delivery/notes`, formData, {
-        onUploadProgress: (ProgressEvent) => {
-          const percentCompleted = Math.round(
-            (ProgressEvent.loaded * 100) / ProgressEvent.total
-          );
-          setUploadFinish(false);
-          console.log(percentCompleted);
-          setUploadProgress(percentCompleted);
-        },
-      });
-      setUploadProgress(0);
-
-      setTimeout(() => {
-        setOpen(!open);
-        setUploadFinish(true);
-      }, 1000 * 60 * 1);
-
-      return "success";
+      axios
+        .post(`${baseUrl}/api/delivery/notes`, formData, {
+          withCredentials: true,
+          onUploadProgress: (ProgressEvent) => {
+            const percentCompleted = Math.round(
+              (ProgressEvent.loaded * 100) / ProgressEvent.total
+            );
+            setUploadFinish(false);
+            setUploadProgress(percentCompleted - 3);
+          },
+        })
+        .then((data) => {
+          if (data.status === 200 && data.data.message !== "Record Exists!!") {
+            setUploadProgress(100);
+            setfdbMessage(`Upload Successfully!`);
+            setfdbOpen(true);
+          } else {
+            setfdbMessage(`${data.data.message}`);
+            setfdbOpen(true);
+            setUploadProgress(0);
+          }
+          setOpen(!open);
+          setUploadFinish(true);
+          setUploadProgress(0);
+        })
+        .catch((error) => console.log(error));
     } catch (error) {
       console.log("Something went wrong!", error.message);
     }
@@ -66,14 +72,14 @@ const DeliveryNotes = () => {
     const inputFile = document.getElementById("fileId");
 
     if (inputFile.files.length === 1) {
-      await uploadDN(inputFile);
+      uploadDN(inputFile);
       dispatch(fetchDns());
     }
   };
 
   useEffect(() => {
     dispatch(fetchDns()); // Get files record from db
-  }, [dispatch]);
+  }, [dispatch, fetchDns]);
 
   useLayoutEffect(() => {
     dispatch(fetchUser());
@@ -86,10 +92,14 @@ const DeliveryNotes = () => {
   return (
     <div>
       {/* Choose file component and submit button */}
+      <SimpleSnackBar
+        open={fdbkOpen}
+        setfdbOpen={setfdbOpen}
+        fdbMessage={fdbMessage}
+      />
       <div style={{ position: "absolute" }}>
         <Drawer anchor={`bottom`} open={open}>
-          <div className="deliveryNoteHeader">
-          </div>
+          <div className="deliveryNoteHeader"></div>
           <Box
             sx={{
               "& .MuiTextField-root": { m: 1, width: "30rem" },
@@ -107,7 +117,12 @@ const DeliveryNotes = () => {
                 justifyItems: "center",
               }}
             >
-              <TextField type="file" id="fileId" required={true} accept="*.pdf" />
+              <TextField
+                type="file"
+                id="fileId"
+                required={true}
+                accept="*.pdf"
+              />
 
               <Button
                 variant="contained"
@@ -137,6 +152,7 @@ const DeliveryNotes = () => {
                   setUploadFinish(true);
                 }}
                 type="submit"
+                disabled={!uploadFinish}
               >
                 X
               </button>

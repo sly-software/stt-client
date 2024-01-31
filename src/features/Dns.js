@@ -14,7 +14,7 @@ export const dnsSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchDns.fulfilled, (state, action) => {
-        state.dns = action.payload
+        state.dns = action.payload 
       })
       .addCase(fetchDns.rejected, (state, action) => {
         state.dns = [...state.dns];

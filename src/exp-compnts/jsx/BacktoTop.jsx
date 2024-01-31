@@ -13,7 +13,8 @@ const BacktoTop = () => {
     if (
       (document.body.scrollTop > 20 ||
         document.documentElement.scrollTop > 20) &&
-      window.location.hash === "#/stocked/chemicals"
+      (window.location.hash === "#/stocked/chemicals" ||
+        window.location.hash === "#/delivery-notes")
     ) {
       backToTopBtn.style.display = "block";
     } else {

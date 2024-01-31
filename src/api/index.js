@@ -1,3 +1,5 @@
+import { reverseSort } from "../utils/utils";
+
 export const baseUrl =
   process.env.NODE_ENV === "development"
     ? "http://localhost:5000"
@@ -193,7 +195,7 @@ export const getUploadedDns = async () => {
       return [];
     }
 
-    return dns;
+    return reverseSort(dns);
   } catch (error) {
     console.error(error);
     return [];
