@@ -1,0 +1,28 @@
+.backdrop-message {
+    animation: animate 1.7s linear infinite;
+    font-style: bold;
+    color: rgb(209, 153, 255);
+}
+
+
+@keyframes animate {
+    0% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 2.5;
+    }
+
+    50% {
+        opacity: 5;
+    }
+
+    75% {
+        opacity: 7.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

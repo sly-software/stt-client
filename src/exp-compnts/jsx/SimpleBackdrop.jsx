@@ -1,14 +1,19 @@
 import React from "react";
-import { Backdrop, CircularProgress } from "@mui/material";
+import { Backdrop, CircularProgress, Typography } from "@mui/material";
+import "../css/simpleBackdrop.css";
 
-const SimpleBackdrop = () => {
+const SimpleBackdrop = ({ message = "" }) => {
   return (
     <div>
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={true}
       >
-        <CircularProgress color="inherit" />
+        <h1 className="backdrop-message">
+          {message} &nbsp;
+        </h1>
+        { message === "" ?  <CircularProgress color="inherit" />: <></>}
+        
       </Backdrop>
     </div>
   );

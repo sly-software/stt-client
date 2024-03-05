@@ -5,22 +5,26 @@ import { useNavigate } from "react-router-dom";
 import { toggleOnOff } from "../../features/UploadSlice";
 import { login } from "../../api";
 import { fetchUser } from "../../features/Login";
+import SimpleBackdrop from "./SimpleBackdrop";
 
 const Login = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoggedIn(true)
 
-    const status = await login(email, password);
+    const {status, statusCode} = await login(email, password);
 
-    // console.log(status)
+    // console.log("From Login.jsx", status, statusCode);
 
-    if (status.name) {
+    if (status.name && statusCode === 200) {
       // console.log(status.name);
+      setLoggedIn(true)
       dispatch(fetchUser());
       navigate("/stocked/chemicals");
     } else {
@@ -30,7 +34,10 @@ const Login = () => {
 
   return (
     <div className="login">
+      { loggedIn ? <SimpleBackdrop message={"let's sign you in ..."}/> : <></> }
+
       <h1 className="login-header">enter your credentials below..</h1>
+
       <form
         action=""
         method="post"

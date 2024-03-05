@@ -64,9 +64,10 @@ export const login = async (email, password) => {
       "Content-Type": "application/json",
     },
   });
-  const user = await res.json();
-  console.log(res);
-  return user;
+  const status = await res.json();
+  const statusCode = res.status;
+  // console.log(res.status);
+  return {status, statusCode};
 };
 
 /**************************************************************** */
