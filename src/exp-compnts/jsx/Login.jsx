@@ -16,25 +16,26 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoggedIn(true)
+    setLoggedIn(!loggedIn);
 
-    const {status, statusCode} = await login(email, password);
+    const { status, statusCode } = await login(email, password);
 
     // console.log("From Login.jsx", status, statusCode);
 
     if (status.name && statusCode === 200) {
       // console.log(status.name);
-      setLoggedIn(true)
+      setLoggedIn(loggedIn);
       dispatch(fetchUser());
       navigate("/stocked/chemicals");
     } else {
-      console.log(status);
+      // console.log("Woops", statusCode);
+      setLoggedIn(loggedIn);
     }
   };
 
   return (
     <div className="login">
-      { loggedIn ? <SimpleBackdrop message={"let's sign you in ..."}/> : <></> }
+      {loggedIn ? <SimpleBackdrop message={"let's sign you in ..."} /> : <></>}
 
       <h1 className="login-header">enter your credentials below..</h1>
 

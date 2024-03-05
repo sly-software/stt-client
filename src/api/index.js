@@ -56,18 +56,23 @@ export const logout = async () => {
 export const login = async (email, password) => {
   const data = JSON.stringify({ email, password });
 
-  const res = await fetch(baseUrl + "/api/login", {
-    method: "POST",
-    credentials: "include",
-    body: data,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const status = await res.json();
-  const statusCode = res.status;
-  // console.log(res.status);
-  return {status, statusCode};
+  try {
+    const res = await fetch(baseUrl + "/api/login", {
+      method: "POST",
+      credentials: "include",
+      body: data,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const status = await res.json();
+    const statusCode = res.status;
+    // console.log(res.status);
+    return { status, statusCode };
+  } catch (error) {
+    return { status: { name: undefined}, statusCode: 404};
+  }
+
 };
 
 /**************************************************************** */
