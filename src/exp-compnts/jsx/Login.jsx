@@ -6,11 +6,17 @@ import { toggleOnOff } from "../../features/UploadSlice";
 import { login } from "../../api";
 import { fetchUser } from "../../features/Login";
 import SimpleBackdrop from "./SimpleBackdrop";
+import { Alert, Button, Snackbar } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Login = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [authMsg, setAuthMsg] = useState("");
+  const [severity, setSeverity] = useState("")
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -26,11 +32,31 @@ const Login = () => {
       // console.log(status.name);
       setLoggedIn(loggedIn);
       dispatch(fetchUser());
-      navigate("/stocked/chemicals");
+
+      setTimeout(() => {
+        navigate("/stocked/chemicals");
+      }, 1000 * 2);
+
+      // Auth feedback
+      setSeverity('success')
+      setOpen(true);
+      setAuthMsg("Authenticated successfully");
     } else {
       // console.log("Woops", statusCode);
       setLoggedIn(loggedIn);
+      // Auth feedback
+      setSeverity('error')
+      setOpen(true);
+      setAuthMsg("Incorrect credentials");
     }
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
   };
 
   return (
@@ -44,7 +70,7 @@ const Login = () => {
         method="post"
         className="login-form"
         onSubmit={handleSubmit}
-      >
+        >
         <input
           type="email"
           placeholder="Enter email"
@@ -71,6 +97,25 @@ const Login = () => {
           LOGIN
         </button>
       </form>
+      {/* Login feedback */}
+      <div>
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          // action={action}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          onClose={handleClose}
+          >
+          <Alert
+            onClose={handleClose}
+            severity={severity}
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            {authMsg}
+          </Alert>
+        </Snackbar>
+      </div>
     </div>
   );
 };
