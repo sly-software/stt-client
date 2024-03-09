@@ -5,6 +5,7 @@ export const baseUrl =
     ? "http://localhost:5000"
     : "https://stt-server.onrender.com";
 
+
 export const getData = async () => {
   const response = await fetch(`${baseUrl}/api/stocked/products`, {
     credentials: "include",

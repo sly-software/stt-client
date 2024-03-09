@@ -36,7 +36,7 @@ const Home = () => {
     console.log(status);
     if (status === 200) {
       dispatch(fetchUser());
-      navigate("/stocked/chemicals");
+      navigate("/login");
     } else {
       console.log(status.statusText);
     }

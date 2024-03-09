@@ -34,7 +34,7 @@ const Login = () => {
       dispatch(fetchUser());
 
       setTimeout(() => {
-        navigate("/stocked/chemicals");
+        navigate(-1);
       }, 1000 * 2);
 
       // Auth feedback

@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Box, Button, Drawer, TextField, Zoom } from "@mui/material";
+import { Box, Button, Drawer, Skeleton, TextField, Zoom } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import OpenInNewSharpIcon from "@mui/icons-material/OpenInNewSharp";
@@ -91,12 +91,14 @@ const DeliveryNotes = () => {
 
   return (
     <div>
-      {/* Choose file component and submit button */}
+      {/* Simple feedback snackbar */}
       <SimpleSnackBar
         open={fdbkOpen}
         setfdbOpen={setfdbOpen}
         fdbMessage={fdbMessage}
       />
+
+      {/* Choose file component and submit button */}
       <div style={{ position: "absolute" }}>
         <Drawer anchor={`bottom`} open={open}>
           <div className="deliveryNoteHeader"></div>
@@ -196,49 +198,89 @@ const DeliveryNotes = () => {
       </form>
 
       {/* Files data from DB */}
-      {fileData
-        .filter((item) => {
-          return searchTerm.toLowerCase() === ""
-            ? true
-            : item.filename.toLowerCase().includes(searchTerm.toLowerCase());
-        })
-        .map((file, index) => (
-          <Zoom
-            in={true}
-            style={{ transitionDelay: `${index * 50}ms` }}
-            key={index}
-          >
-            <div className="files_data">
-              <div>
-                {/* {console.log(dateFormater(file.uploaddate))} */}
-                <b>{file.filename}</b>
+      {fileData.length === 0 ? (
+        <>
+          <Skeleton
+            variant="text"
+            animation="wave"
+            width={"70%"}
+            height={"5rem"}
+            sx={{ fontSize: "1rem", margin: "0 auto" }}
+          />
+          <Skeleton
+            variant="text"
+            animation="wave"
+            width={"70%"}
+            height={"5rem"}
+            sx={{ fontSize: "1rem", margin: "0 auto" }}
+          />
+          <Skeleton
+            variant="text"
+            animation="wave"
+            width={"70%"}
+            height={"5rem"}
+            sx={{ fontSize: "1rem", margin: "0 auto" }}
+          />
+          <Skeleton
+            variant="text"
+            animation="wave"
+            width={"70%"}
+            height={"5rem"}
+            sx={{ fontSize: "1rem", margin: "0 auto" }}
+          />
+          <Skeleton
+            variant="text"
+            animation="wave"
+            width={"70%"}
+            height={"5rem"}
+            sx={{ fontSize: "1rem", margin: "0 auto" }}
+          />
+        </>
+      ) : (
+        fileData
+          .filter((item) => {
+            return searchTerm.toLowerCase() === ""
+              ? true
+              : item.filename.toLowerCase().includes(searchTerm.toLowerCase());
+          })
+          .map((file, index) => (
+            <Zoom
+              in={true}
+              style={{ transitionDelay: `${index * 50}ms` }}
+              key={index}
+            >
+              <div className="files_data">
+                <div>
+                  {/* {console.log(dateFormater(file.uploaddate))} */}
+                  <b>{file.filename}</b>
+                </div>
+
+                <div className="files_data-actions">
+                  <span>
+                    {`${dateFormater(file.uploaddate).day}`}
+                    <sup>{`${dateFormater(file.uploaddate).superString}`}</sup>
+                    {` ${dateFormater(file.uploaddate).monthInWord}`}
+                    {` ${dateFormater(file.uploaddate).year}`}
+                  </span>
+
+                  <a href={`${file.viewlink}`} target="_blank">
+                    <OpenInNewSharpIcon />
+                  </a>
+
+                  <a href={`${file.downloadlink}`}>
+                    <FileDownloadIcon />
+                  </a>
+
+                  <span>
+                    <button type="submit" id={file.fileid} disabled={true}>
+                      <DeleteForeverRoundedIcon />
+                    </button>
+                  </span>
+                </div>
               </div>
-
-              <div className="files_data-actions">
-                <span>
-                  {`${dateFormater(file.uploaddate).day}`}
-                  <sup>{`${dateFormater(file.uploaddate).superString}`}</sup>
-                  {` ${dateFormater(file.uploaddate).monthInWord}`}
-                  {` ${dateFormater(file.uploaddate).year}`}
-                </span>
-
-                <a href={`${file.viewlink}`} target="_blank">
-                  <OpenInNewSharpIcon />
-                </a>
-
-                <a href={`${file.downloadlink}`}>
-                  <FileDownloadIcon />
-                </a>
-
-                <span>
-                  <button type="submit" id={file.fileid} disabled={true}>
-                    <DeleteForeverRoundedIcon />
-                  </button>
-                </span>
-              </div>
-            </div>
-          </Zoom>
-        ))}
+            </Zoom>
+          ))
+      )}
     </div>
   );
 };
