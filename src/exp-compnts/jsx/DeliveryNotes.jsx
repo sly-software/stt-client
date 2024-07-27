@@ -79,7 +79,7 @@ const DeliveryNotes = () => {
 
   useEffect(() => {
     dispatch(fetchDns()); // Get files record from db
-  }, [dispatch, fetchDns]);
+  }, [dispatch]);
 
   useLayoutEffect(() => {
     dispatch(fetchUser());
@@ -87,7 +87,7 @@ const DeliveryNotes = () => {
     if (userLoggedIn === "IBTZ") {
       return navigate("/login");
     }
-  }, [dispatch, fetchDns, fetchUser]);
+  }, [dispatch, navigate, userLoggedIn]);
 
   return (
     <div>
@@ -263,7 +263,7 @@ const DeliveryNotes = () => {
                     {` ${dateFormater(file.uploaddate).year}`}
                   </span>
 
-                  <a href={`${file.viewlink}`} target="_blank">
+                  <a href={`${file.viewlink}`} target="_blank" rel="noreferrer">
                     <OpenInNewSharpIcon />
                   </a>
 

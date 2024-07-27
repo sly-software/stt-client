@@ -3,7 +3,8 @@ import "../css/CurrentChemicalsTable.css";
 import Description from "./Description";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../../features/CurrentChemicalsSlice";
-import SimpleBackdrop from "./SimpleBackdrop";
+// import SimpleBackdrop from "./SimpleBackdrop";
+import { Spinloader } from "./Spinloader";
 
 const CurrentChemicalsTable = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,18 +12,15 @@ const CurrentChemicalsTable = () => {
   const chemicalData = useSelector((state) => state.chemicals.chemicals);
   const status = useSelector((state) => state.chemicals.status);
 
-
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchData());
     }
-    
   }, [dispatch, status]);
-
 
   return (
     <div className="table">
-      { status === "loading" ? <SimpleBackdrop /> : <></> }
+      {/* { status === "loading" ? <SimpleBackdrop /> : <></> } */}
 
       <Description searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
@@ -66,6 +64,15 @@ const CurrentChemicalsTable = () => {
           )}
         </tbody>
       </table>
+
+      {/* Loading state */}
+      {status === "loading" ? (
+        <Spinloader
+          message={"Fetching data from server, this may take few minutes"}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

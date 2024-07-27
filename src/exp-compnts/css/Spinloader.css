@@ -1,0 +1,16 @@
+.circularProgress {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem;
+    color: rgb(169, 169, 169);
+  }
+  
+  .cp_text {
+    margin: 0.5rem;
+    color: #8e8e8e;
+  }
