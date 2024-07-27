@@ -1,18 +1,21 @@
 .services {
     margin: 5rem auto;
     padding: 5rem 0;
-    padding-top: 2rem;
-    height: auto;
-    width: 100%;
+    /* padding-top: 2rem; */
+    height: 30rem;
+    width: 70%;
 
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     align-items: center;
     /* border: 2px grey solid; */
+    border-radius: 0.4rem;
+    background-color: rgb(228, 228, 228);
 }
 
-.services-card {
+
+/* .services-card {
     border: 2px solid rgb(185, 185, 185);
     border-radius: 0.5rem;
     margin: 1rem;
@@ -32,4 +35,84 @@
     height: 22rem;
     transition: all 0.1s ease-in-out;
     box-shadow: 0px 5px 15px 3px rgb(176, 176, 176);
+} */
+
+
+
+.institution, .reff_type, .result_box {
+    width: 100%;
+    height: auto;
+    padding: 0.4rem;
+    margin-bottom: 1rem;
+    background-color: rgb(180, 180, 180);
+    border-radius: 0.4rem;
+    font-size: 1.2rem;
 }
+
+.institution>label{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.reff_type {
+    display: flex;
+    justify-content: space-around;
+}
+
+.reff_type>label>input {
+    margin: 0.5rem;
+}
+
+.result_box {
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    font-weight: bolder;
+}
+
+.services_form {
+    /* border: 1px red solid; */
+    width: 50%;
+    height: 100%;
+    /* display: inline-block; */
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+}
+
+.services_select {
+    appearance: none;
+    cursor: pointer;
+    border-radius: 0.4rem;
+    border: none;
+    background-color: rgb(0, 0, 0);
+    width: auto;
+    height: 2rem;
+    /* text-align: center; */
+    color: rgba(255, 255, 255, 0.9);
+    padding: 0.5rem;
+}
+
+.services_button {
+    border-radius: 0.4rem;
+    border: none;
+    background-color: rgb(53, 53, 52);
+    color: white;
+    width: 8rem;
+    height: 3rem;
+    padding: 2px;
+    font-size: 1.3rem;
+}
+
+.services_button:hover {
+    background-color: grey;
+    transition: background-color 200ms ease;
+}
+
+.services_button:active {
+    background-color: rgb(53, 52, 52);
+    /* transition: background-color 100ms ease; */
+}
+

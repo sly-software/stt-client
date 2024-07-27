@@ -4,11 +4,11 @@ import "../css/BacktoTop.css";
 import { FaBuffer } from "react-icons/fa6";
 import { FaAnglesLeft } from "react-icons/fa6";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import Upload from "./Upload";
+// import Upload from "./Upload";
 import Categories from "./Categories";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Button } from "@mui/material";
-import { toggleOnOff } from "../../features/UploadSlice";
+// import { toggleOnOff } from "../../features/UploadSlice";
 import { logout } from "../../api";
 import BacktoTop from "./BacktoTop";
 import CurrentUser from "./CurrentUser";
@@ -45,11 +45,11 @@ const Home = () => {
   useEffect(() => {
     dispatch(fetchUser());
     setTimeout(() => {
-      navigate("/stocked/chemicals");
+      // navigate("/stocked/chemicals");
       setRedirect(false);
     }, 500);
 
-  }, [dispatch, fetchUser]);
+  }, [dispatch, navigate]);
 
   return (
     <div className="container">
